@@ -1,33 +1,63 @@
 package Passgen;
 
 import java.util.Scanner;
+import java.util.*;
 
 
 public class Pass1 {
 
-	public static void main(String[] args) {
+	public static String randPassword(int numUpperCase, int numLowerCase, int numSymbols, int numDigits) {
+
+		char[] upperCase = new char[]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+		char[] lowerCase = new char[]{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+		char[] symbols = new char[]{'!','@','#','$','%','^','&','*','(',')','_','+','-','*','/','?','<','>'};
+		char[] digits = new char[]{'1','2','3','4','5','6','7','8','9','0'};
+
+		StringBuilder password = new StringBuilder();
 		
-		 /*String passwordSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		char[] password = new char[length];
-		for (int i=0; i<length; i++) {
-		int rand = (int) (Math.random() * passwordSet.length());
-		password[i] = passwordSet.charAt(rand);
+		password = password.append(generateRandomChars(upperCase, numUpperCase))
+				.append(generateRandomChars(lowerCase, numLowerCase))
+				.append(generateRandomChars(symbols, numSymbols))
+				.append(generateRandomChars(digits, numDigits));
+
+		return password.toString();
+	}
+	
+	/** 
+	 * Helper function that generates a random string of characters from an array of characters, chars
+	 * It generates the number of characters numCharsToGenerate
+	 * This function uses generateRandomInt to generate a random integer from 0 to the last index of array chars
+	 **/
+	public static StringBuilder generateRandomChars(char[] chars, int numCharsToGenerate) {
+		int counter = 1;
+		int lastArrayIndex = chars.length - 1;
+		StringBuilder randomChars = new StringBuilder();
+		int index = 0;
+
+		while(counter <= numCharsToGenerate) {
+			index = generateRandomInt(lastArrayIndex);
+			randomChars = randomChars.append(chars[index]);
+			counter++;
 		}
-		return new String(password);*/
 		
+		return randomChars;
+	}
+
+	/**
+	 * Helper function that generates a random number from 0 to max
+	 */
+	public static int generateRandomInt(int max) {
+		int min = 0;
 		
-		
-		
-		Pass1 generator = new Pass1();
-		String upperCase, lowerCase, symbols, numbers, resultPassword = "";
-		int characterNum;
-		upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		lowerCase = "abcdefghijklmnopqrstuvwxyz";
-		symbols = "!@#$%^&*()_+-*/?<>";
-		numbers = "1234567890";
+		// Generates an index between 0 and max, where max is the last index of the array
+		int randomInt = (int)Math.floor(Math.random() * (max - min + 1) + min);
+		return randomInt;
+	}
+
+
+	public static void main(String[] args) {
+
 		Scanner in = new Scanner(System.in);
-		
-		
 		System.out.println("Welcome Our Password Generator");
 		
 		System.out.println("");
@@ -35,43 +65,29 @@ public class Pass1 {
 		System.out.println("Would you like to include Upper case?\n"
 				+ "If the Answer is Yes, Write how many you would like\n"
 				+ "If the Answer is No, Write 0, Please\n");
-		characterNum = in.nextInt();
-		resultPassword = generator.randPassword(resultPassword, upperCase, characterNum);
+		int upperCaseNum = in.nextInt();
 		
 		System.out.println("Would you like to include Lower case?\n"
 				+ "If the Answer is Yes, Write how many you would like\n"
 				+ "If the Answer is No, Write 0, Please\n");
-		characterNum = in.nextInt();
-		resultPassword = generator.randPassword(resultPassword, lowerCase, characterNum);
-	
+		int lowerCaseNum = in.nextInt();
 		
 		System.out.println("Would you like to include Symbols?\n"
 				+ "If the Answer is Yes, Write how many you would like\n"
 				+ "If the Answer is No, Write 0, Please\n");
-		characterNum = in.nextInt();
-		resultPassword = generator.randPassword(resultPassword, symbols, characterNum);
+		int symbolsNum = in.nextInt();
 	
 		System.out.println("Would you like to include Numbers\n?"
 				+ "If the Answer is Yes, Write how many you would like\n"
 				+ "If the Answer is No, Write 0, Please\n");
-		characterNum = in.nextInt();
-		resultPassword = generator.randPassword(resultPassword, numbers, characterNum);
+		int digitsNum = in.nextInt();
+		
+		String resultPassword = randPassword(upperCaseNum, lowerCaseNum, symbolsNum, digitsNum);
 	
 		System.out.println("Your password is: " +resultPassword);
 		
 	}
-		public String randPassword(String resultPassword,String words, int num) {
-			String[] arrayWord = words.split("");
-			int randNum = 0;
-			for (int i = 0; i < num; i++);{
-				randNum = (int)(Math.random() * (arrayWord.length-1) + 0);
-					
-				
-				resultPassword = resultPassword + arrayWord[randNum];
-			}
-			
-			return resultPassword;
-		}
+
 }
 	
 
