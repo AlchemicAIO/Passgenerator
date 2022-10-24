@@ -6,7 +6,8 @@ import java.util.*;
 
 public class Pass1 {
 
-	public static String randPassword(int numUpperCase, int numLowerCase, int numSymbols, int numDigits) {
+	public static String randPassword(String upperCaseAns, String lowerCaseAns, String symbolsAns, String digitsAns) {
+
 
 		char[] upperCase = new char[]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 		char[] lowerCase = new char[]{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -14,8 +15,20 @@ public class Pass1 {
 		char[] digits = new char[]{'1','2','3','4','5','6','7','8','9','0'};
 
 		StringBuilder password = new StringBuilder();
+		int typesOfChars = 4;
+		int numOfUpperCaseChars = 0;
+		int maxLengthOfPassword = 128;
+		int minLengthOfPassword = 8;
+
+		int maximumCharsPerType = maxLengthOfPassword / typesOfChars;
 		
-		password = password.append(generateRandomChars(upperCase, numUpperCase))
+		// Generate a random number of upper case characters to use in the password
+		if(upperCaseAns.equalsTo('y')) {
+			// Generate a random number from 0 - 30;
+			numOfUpperCaseChars = generateRandomInt(maximumCharsPerType);
+		}
+		
+		password = password.append(generateRandomChars(upperCase, numOfUpperCaseChars))
 				.append(generateRandomChars(lowerCase, numLowerCase))
 				.append(generateRandomChars(symbols, numSymbols))
 				.append(generateRandomChars(digits, numDigits));
@@ -62,25 +75,17 @@ public class Pass1 {
 		
 		System.out.println("");
 		
-		System.out.println("Would you like to include Upper case?\n"
-				+ "If the Answer is Yes, Write how many you would like\n"
-				+ "If the Answer is No, Write 0, Please\n");
-		int upperCaseNum = in.nextInt();
+		System.out.println("Would you like to include Upper case?\n");
+		String upperCaseAns = in.nextString();
 		
-		System.out.println("Would you like to include Lower case?\n"
-				+ "If the Answer is Yes, Write how many you would like\n"
-				+ "If the Answer is No, Write 0, Please\n");
-		int lowerCaseNum = in.nextInt();
+		System.out.println("Would you like to include Lower case?\n");
+		String lowerCaseAns = in.nextString();
 		
-		System.out.println("Would you like to include Symbols?\n"
-				+ "If the Answer is Yes, Write how many you would like\n"
-				+ "If the Answer is No, Write 0, Please\n");
-		int symbolsNum = in.nextInt();
+		System.out.println("Would you like to include Symbols?\n");
+		String symbolsAns = in.nextString();
 	
-		System.out.println("Would you like to include Numbers\n?"
-				+ "If the Answer is Yes, Write how many you would like\n"
-				+ "If the Answer is No, Write 0, Please\n");
-		int digitsNum = in.nextInt();
+		System.out.println("Would you like to include Numbers\n?");
+		String digitAns = in.nextString();
 		
 		String resultPassword = randPassword(upperCaseNum, lowerCaseNum, symbolsNum, digitsNum);
 	
